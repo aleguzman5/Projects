@@ -9,6 +9,7 @@ import com.sg.contactlistspringmvc.dao.ContactListDao;
 import com.sg.contactlistspringmvc.model.Contact;
 import java.util.List;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * 
+ * @author Alejandro
+ */
 @CrossOrigin
 @Controller
-
 public class RESTController {
 
     private ContactListDao dao;
@@ -40,7 +44,7 @@ public class RESTController {
     @RequestMapping(value = "/contact", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public Contact createContact(@RequestBody Contact contact) {
+    public Contact createContact(@Valid @RequestBody Contact contact) {
         return dao.addContact(contact);
     }
 
@@ -52,9 +56,11 @@ public class RESTController {
 
     @RequestMapping(value = "/contact/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateContact(@PathVariable("id") long id, @RequestBody Contact contact) {
+    public void updateContact(@PathVariable("id") long id, @Valid @RequestBody Contact contact) throws UpdateIntegrityException {
         // favor the path variable over the id in the object if they differ
-        contact.setContactId(id);
+        if (id != contact.getContactId()) {
+            throw new UpdateIntegrityException("Contact Id on URL must match Contact Id in submitted data.");
+        }
         dao.updateContact(contact);
     }
 
