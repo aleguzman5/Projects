@@ -10,8 +10,10 @@ import com.sg.contactlistspringmvc.model.Contact;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -90,8 +92,12 @@ public class ContactController {
     }
 
     @RequestMapping(value = "/editContact", method = RequestMethod.POST)
-    public String editContact(@ModelAttribute("contact") Contact contact) {
+    public String editContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult result) {
 
+        if(result.hasErrors()) {
+            return "editContactForm";
+        }
+        
         dao.updateContact(contact);
 
         return "redirect:displayContactsPage";
