@@ -16,4 +16,5 @@
 
     <!-- Bean definitions go here -->
     <bean id="dao" class="com.sg.vendingmachinespringmvc.dao.ItemListDaoInMemImpl"/>
+    <bean id="service" class="com.sg.vendingmachinespringmvc.service.VendingMachine"/>
 </beans>

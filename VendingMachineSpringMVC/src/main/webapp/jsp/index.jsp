@@ -61,7 +61,7 @@
                         </div>
                     </form>
                     <hr/>
-                    <form class="form-horizontal" role="form" id="messages-form">
+                    <form class="form-horizontal" role="form" id="messages-form" method="GET" action="makePurchase">
                         <h2 style="text-align:center">Messages</h2>
                         <div class="col-md-12">
                             <input type="text" class="form-control" id="messages" value="${message}"/>
@@ -77,10 +77,10 @@
                         </div>
                     </form>
                     <hr/>
-                    <form class="form-horizontal" role="form" id="change-form">
+                    <form class="form-horizontal" role="form" id="change-form" method="GET" action="getMoneyBack">
                         <h2 style="text-align:center">Change</h2>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="change" />
+                            <input type="text" class="form-control" id="change" value="${change}"/>
                         </div>
                         <div class="col-md-8">
                             <button type="submit" id="change-return-button" class="btn btn-primary">Change Return</button>
