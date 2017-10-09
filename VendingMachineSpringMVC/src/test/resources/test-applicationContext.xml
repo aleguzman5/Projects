@@ -16,4 +16,10 @@
 
     <!-- Bean definitions go here -->
     <bean id="dao" class="com.sg.vendingmachinespringmvc.dao.ItemListDaoInMemImpl"/>
+    
+    <bean id="daoStub" class="com.sg.vendingmachinespringmvc.dao.ItemListDaoStubImpl"/>
+    <bean id="service" class="com.sg.vendingmachinespringmvc.service.VendingMachine">
+        <constructor-arg ref="daoStub"/>
+    </bean>
+    
 </beans>
