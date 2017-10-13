@@ -37,7 +37,7 @@ create table Actor (
 	ActorId int primary key auto_increment,
     FirstName varchar (30)not null,
     LastName varchar(30) not null,
-    BrithDate date null
+    BirthDate date null
 );
 
 create table CastMembers (
