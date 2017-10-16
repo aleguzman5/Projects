@@ -7,14 +7,21 @@ from Room r
 inner join reservationdetails rd on r.RoomId = rd.RoomId
 inner join reservation res on rd.ReservationId = res.ReservationId;
 
+select * 
+from Room;
+
+select * 
+from reservationdetails;
+
 select 
 	r.`Number`,
     r.Floor
 from Room r
 left outer join reservationdetails rd on r.RoomId = rd.RoomId
 left outer join reservation res on rd.ReservationId = res.ReservationId
-	where res.FromDate != '2017/11/01' and res.ToDate != '2017/11/05'; 
-    #res.FromDate is null and res.ToDate is null;
+	where res.FromDate != '2017/11/01' and res.ToDate != '2017/11/05' 
+    or res.FromDate is null and res.ToDate is null
+    order by r.Floor;
     
 select 
 	res.ReservationId,
@@ -32,11 +39,11 @@ inner join customer c on res.CustomerId = c.CustomerId
 select * from RoomAmmenities;
 
 select 
-	*
+	distinct r.`Number`
 from Ammenities a
 inner join roomammenities ra on a.AmmenitiesId = ra.AmmenitiesId
 inner join room r on ra.RoomId = r.RoomId
-	where a.Description = 'Minibar' #and a.Description = 'WiFi';
+	where a.Description in ('Minibar', 'WiFi') #and a.Description = 'WiFi';
     #group by ra.RoomId
     ;
     

@@ -141,6 +141,20 @@ insert into Reservation(CustomerId, FromDate, ToDate) values
     (2, '2017/10/10', '2017/10/14'),
 	(4, '2017/10/24', '2017/10/30');
 
+create table Guest (
+	GuestId int primary key auto_increment,
+    FirstName varchar(45) not null,
+    LasttName varchar(45) not null,
+    Age int not null
+);
+
+create table Reservation_Guest (
+	GuestId int not null,
+    ReservationId int not null,
+    
+    foreign key (GuestId) references Guest(GuestId),
+    foreign key (ReservationId) references Reservation(ReservationId)
+);
 
 create table ReservationDetails (
 	ReservationId int not null,
