@@ -58,7 +58,7 @@ public class VendingMachineTest {
     public void testGetItem() {
         Item item = service.getItem(1);
         assertNotNull(item);
-        item = service.getItem(9);
+        item = service.getItem(10);
         assertNull(item);
     }
 
@@ -67,7 +67,7 @@ public class VendingMachineTest {
      */
     @Test
     public void testGetAllItems() {
-        assertEquals(1, service.getAllItems().size());
+        assertEquals(9, service.getAllItems().size());
     }
 
     /**

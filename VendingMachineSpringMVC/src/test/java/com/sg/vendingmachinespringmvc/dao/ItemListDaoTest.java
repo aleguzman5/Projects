@@ -44,7 +44,7 @@ public class ItemListDaoTest {
 
         ApplicationContext ctx
                 = new ClassPathXmlApplicationContext("test-applicationContext.xml");
-        dao = ctx.getBean("dao", ItemListDao.class);
+        dao = ctx.getBean("daoStub", ItemListDao.class);
     }
 
     @After
