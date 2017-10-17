@@ -11,39 +11,30 @@ import java.util.Objects;
  *
  * @author Alejandro
  */
-public class Author {
-    
-    private int aurthorId;
-    private String firstName;
-    private String lastName;
+public class Publisher {
+
+    private int publisherId;
+    private String name;
     private String street;
     private String city;
     private String state;
     private String zip;
     private String phone;
 
-    public int getAurthorId() {
-        return aurthorId;
+    public int getPublisherId() {
+        return publisherId;
     }
 
-    public void setAurthorId(int aurthorId) {
-        this.aurthorId = aurthorId;
+    public void setPublisherId(int publisherId) {
+        this.publisherId = publisherId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getStreet() {
@@ -89,14 +80,13 @@ public class Author {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + this.aurthorId;
-        hash = 53 * hash + Objects.hashCode(this.firstName);
-        hash = 53 * hash + Objects.hashCode(this.lastName);
-        hash = 53 * hash + Objects.hashCode(this.street);
-        hash = 53 * hash + Objects.hashCode(this.city);
-        hash = 53 * hash + Objects.hashCode(this.state);
-        hash = 53 * hash + Objects.hashCode(this.zip);
-        hash = 53 * hash + Objects.hashCode(this.phone);
+        hash = 37 * hash + this.publisherId;
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.street);
+        hash = 37 * hash + Objects.hashCode(this.city);
+        hash = 37 * hash + Objects.hashCode(this.state);
+        hash = 37 * hash + Objects.hashCode(this.zip);
+        hash = 37 * hash + Objects.hashCode(this.phone);
         return hash;
     }
 
@@ -111,14 +101,11 @@ public class Author {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Author other = (Author) obj;
-        if (this.aurthorId != other.aurthorId) {
+        final Publisher other = (Publisher) obj;
+        if (this.publisherId != other.publisherId) {
             return false;
         }
-        if (!Objects.equals(this.firstName, other.firstName)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastName, other.lastName)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         if (!Objects.equals(this.street, other.street)) {
@@ -138,4 +125,5 @@ public class Author {
         }
         return true;
     }
+    
 }
