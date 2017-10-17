@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public class Author {
     
-    private int aurthorId;
+    private int authorId;
     private String firstName;
     private String lastName;
     private String street;
@@ -22,12 +22,12 @@ public class Author {
     private String zip;
     private String phone;
 
-    public int getAurthorId() {
-        return aurthorId;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAurthorId(int aurthorId) {
-        this.aurthorId = aurthorId;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public String getFirstName() {
@@ -89,7 +89,7 @@ public class Author {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + this.aurthorId;
+        hash = 53 * hash + this.authorId;
         hash = 53 * hash + Objects.hashCode(this.firstName);
         hash = 53 * hash + Objects.hashCode(this.lastName);
         hash = 53 * hash + Objects.hashCode(this.street);
@@ -112,7 +112,7 @@ public class Author {
             return false;
         }
         final Author other = (Author) obj;
-        if (this.aurthorId != other.aurthorId) {
+        if (this.authorId != other.authorId) {
             return false;
         }
         if (!Objects.equals(this.firstName, other.firstName)) {

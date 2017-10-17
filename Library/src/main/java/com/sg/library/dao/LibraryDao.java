@@ -22,7 +22,7 @@ public interface LibraryDao {
     
     public void updateAuthor(Author author);
     
-    public Author getAuthorById(int id);
+    public Author getAuthorById(int authorId);
     
     public List<Author> getAllAuthors();
     

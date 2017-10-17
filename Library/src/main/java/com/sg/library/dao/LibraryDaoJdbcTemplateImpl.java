@@ -5,7 +5,17 @@
  */
 package com.sg.library.dao;
 
+import com.sg.library.model.Author;
+import com.sg.library.model.Book;
+import com.sg.library.model.Publisher;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -99,4 +109,129 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
             + "books.book_id = ?";
     private static final String SQL_SELECT_ALL_PUBLISHERS
             = "select * from publishers";
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public void addAuthor(Author author) {
+        jdbcTemplate.update(SQL_INSERT_AUTHOR,
+                author.getFirstName(),
+                author.getLastName(),
+                author.getStreet(),
+                author.getCity(),
+                author.getState(),
+                author.getZip(),
+                author.getPhone());
+
+        int authorId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
+    }
+
+    @Override
+    public void deleteAuthor(int authorId) {
+        jdbcTemplate.update(SQL_DELETE_AUTHOR, authorId);
+    }
+
+    @Override
+    public void updateAuthor(Author author) {
+        jdbcTemplate.update(SQL_UPDATE_AUTHOR,
+                author.getFirstName(),
+                author.getLastName(),
+                author.getStreet(),
+                author.getCity(),
+                author.getState(),
+                author.getZip(),
+                author.getPhone(),
+                author.getAuthorId());
+    }
+
+    @Override
+    public Author getAuthorById(int authorId) {
+        try {
+            return jdbcTemplate.queryForObject(SQL_SELECT_AUTHOR, new AuthorMapper(), authorId);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Author> getAllAuthors() {
+        return jdbcTemplate.query(SQL_SELECT_ALL_AUTHORS, new AuthorMapper());
+    }
+
+    @Override
+    public void addBook(Book book) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteBook(int bookId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateBook(Book book) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Book getBookById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Book> getBooksByAuthorId(int authorId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Book> getBooksByPublisherId(int publisherId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Book> getAllBooks() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addPublisher(Publisher publisher) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deletePublisher(int publisherId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updatePublisher(Publisher publisher) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Publisher getPublisherById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Publisher> getAllPublishers() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static final class AuthorMapper implements RowMapper<Author> {
+
+        @Override
+        public Author mapRow(ResultSet rs, int i) throws SQLException {
+            Author au = new Author();
+            au.setFirstName(rs.getString("first_name"));
+            au.setLastName(rs.getString("last_name"));
+            au.setStreet(rs.getString("street"));
+            au.setStreet(rs.getString("city"));
+            au.setStreet(rs.getString("state"));
+            au.setStreet(rs.getString("zip"));
+            au.setStreet(rs.getString("phone"));
+            au.setAuthorId(rs.getInt("author_id"));
+            return au;
+        }
+    }
+
 }
