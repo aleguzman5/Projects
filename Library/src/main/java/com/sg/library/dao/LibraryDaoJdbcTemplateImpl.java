@@ -193,28 +193,49 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addPublisher(Publisher publisher) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_INSERT_PUBLISHER,
+                publisher.getName(),
+                publisher.getStreet(),
+                publisher.getCity(),
+                publisher.getState(),
+                publisher.getZip(),
+                publisher.getPhone());
+
+        int publisherId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
+
     }
 
     @Override
     public void deletePublisher(int publisherId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_DELETE_PUBLISHER, publisherId);
     }
 
     @Override
     public void updatePublisher(Publisher publisher) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_UPDATE_PUBLISHER,
+                publisher.getName(),
+                publisher.getStreet(),
+                publisher.getCity(),
+                publisher.getState(),
+                publisher.getZip(),
+                publisher.getPhone(),
+                publisher.getPublisherId());
     }
 
     @Override
     public Publisher getPublisherById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return jdbcTemplate.queryForObject(SQL_SELECT_PUBLISHER, new PublisherMapper(), id);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 
     @Override
     public List<Publisher> getAllPublishers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jdbcTemplate.query(SQL_SELECT_ALL_PUBLISHERS, new PublisherMapper());
     }
 
     private static final class AuthorMapper implements RowMapper<Author> {
@@ -232,6 +253,23 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
             au.setAuthorId(rs.getInt("author_id"));
             return au;
         }
+    }
+
+    private static final class PublisherMapper implements RowMapper<Publisher> {
+
+        @Override
+        public Publisher mapRow(ResultSet rs, int i) throws SQLException {
+            Publisher pub = new Publisher();
+            pub.setPublisherId(rs.getInt("publisher_id"));
+            pub.setName(rs.getString("name"));
+            pub.setStreet(rs.getString("street"));
+            pub.setCity(rs.getString("city"));
+            pub.setState(rs.getString("state"));
+            pub.setZip(rs.getString("zip"));
+            pub.setPhone(rs.getString("phone"));
+            return pub;
+        }
+
     }
 
 }
