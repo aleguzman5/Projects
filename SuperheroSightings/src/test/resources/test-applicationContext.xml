@@ -47,4 +47,8 @@
           class="com.sg.superherosightings.dao.OrganizationDaoImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
+    <bean id="superPowerDao" 
+          class="com.sg.superherosightings.dao.SuperPowerDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
 </beans>

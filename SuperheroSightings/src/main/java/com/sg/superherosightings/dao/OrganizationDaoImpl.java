@@ -20,6 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Alejandro
  */
 public class OrganizationDaoImpl implements OrganizationDao {
+    
+    private JdbcTemplate jdbcTemplate;
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     private static final String SQL_INSERT_ORGANIZATION
             = "insert into organization (name, description, address, city, "
@@ -46,13 +52,8 @@ public class OrganizationDaoImpl implements OrganizationDao {
             + "inner join organization o on so.organizationId = o.organizationId "
             + "where s.superId = ?";
 
-    private JdbcTemplate jdbcTemplate;
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addOrganization(Organization organization) {
         jdbcTemplate.update(SQL_INSERT_ORGANIZATION, 
                 organization.getName(),
@@ -95,7 +96,7 @@ public class OrganizationDaoImpl implements OrganizationDao {
     public Organization getOrganizationById(int organizationId) {
         try {
             return jdbcTemplate.queryForObject(SQL_SELECT_ORGANIZATION,
-                    new LocationMapper(),
+                    new OrganizationMapper(),
                     organizationId);
         } catch (EmptyResultDataAccessException ex) {
             return null;
@@ -105,16 +106,16 @@ public class OrganizationDaoImpl implements OrganizationDao {
     @Override
     public List<Organization> getAllOrganizations() {
         return jdbcTemplate.query(SQL_SELECT_ALL_ORGANIZATIONS,
-                new LocationMapper());
+                new OrganizationMapper());
     }
 
     @Override
     public List<Organization> getAllOrganizationsBySuper(int superId) {
         return jdbcTemplate.query(SQL_SELECT_ORGANIZATIONS_BY_SUPER_ID,
-                new LocationMapper(), superId);
+                new OrganizationMapper(), superId);
     }
 
-    public static final class LocationMapper implements RowMapper<Organization> {
+    public static final class OrganizationMapper implements RowMapper<Organization> {
 
         @Override
         public Organization mapRow(ResultSet rs, int i) throws SQLException {
