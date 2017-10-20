@@ -19,7 +19,7 @@ public class Organization {
     private String address;
     private String city;
     private int zip;
-    private String phone;
+    private long phone;
     private String email;
 
     public int getOrganizationId() {
@@ -70,11 +70,11 @@ public class Organization {
         this.zip = zip;
     }
 
-    public String getPhone() {
+    public long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(long phone) {
         this.phone = phone;
     }
 

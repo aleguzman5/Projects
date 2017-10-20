@@ -53,7 +53,7 @@ public class LocationDaoImpl implements LocationDao {
             + "inner join `super` s on ss.superId = s.superId "
             + "where s.superId = ?";
     private static final String SQL_SELECT_ALL_SUPER_BY_LOCATIONID
-            = "select s.*, l.`name` "
+            = "select s.* "
             + "from super s "
             + "inner join supersighting ss on s.superId = ss.superId "
             + "inner join sighting si on ss.sightingId = si.sightingId "
