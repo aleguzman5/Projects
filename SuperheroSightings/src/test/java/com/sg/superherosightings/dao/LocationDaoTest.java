@@ -60,10 +60,10 @@ public class LocationDaoTest {
     public void testAddGetLocation() {
         Location loc = new Location();
         loc.setName("The Software Guild");
-        loc.setDescription("Multi-Building Campus");
-        loc.setAddress("526 South Main Street");
-        loc.setLatitude(41.071827);
-        loc.setLongitude(-81.527073);
+        loc.setDescription("Coding Camp");
+        loc.setAddress("5432 Main Ave.");
+        loc.setLatitude(44.032145);
+        loc.setLongitude(-98.432156);
 
         locationDao.addLocation(loc);
 
@@ -78,10 +78,10 @@ public class LocationDaoTest {
     public void testDeleteLocation() {
         Location loc = new Location();
         loc.setName("The Software Guild");
-        loc.setDescription("Multi-Building Campus");
-        loc.setAddress("526 South Main Street");
-        loc.setLatitude(41.071827);
-        loc.setLongitude(-81.527073);
+        loc.setDescription("Coding Camp");
+        loc.setAddress("5432 Main Ave.");
+        loc.setLatitude(44.032145);
+        loc.setLongitude(-98.432156);
 
         locationDao.addLocation(loc);
 
@@ -99,20 +99,17 @@ public class LocationDaoTest {
     public void testUpdateLocation() {
         Location loc = new Location();
         loc.setName("The Software Guild");
-        loc.setDescription("Multi-Building Campus");
-        loc.setAddress("526 South Main Street");
-        loc.setLatitude(41.071827);
-        loc.setLongitude(-81.527073);
+        loc.setDescription("Coding Camp");
+        loc.setAddress("5432 Main Ave.");
+        loc.setLatitude(44.032145);
+        loc.setLongitude(-98.432156);
 
         locationDao.addLocation(loc);
         
-        String name = "The Software Guild";
         Location fromDao = locationDao.getLocationById(loc.getLocationId());
-        assertEquals(fromDao.getName(), name);
-        
-        String minn = "The Software Guild Minnesota";
+        assertEquals(fromDao.getName(), "The Software Guild");
 
-        fromDao.setName("The Software Guild Minnesota");
+        fromDao.setName("The Software Guild Minneapolis");
         fromDao.setDescription("Multi-Building Campus");
         fromDao.setAddress("526 South Main Street Suite, Minnesota");
         fromDao.setLatitude(41.071827);
@@ -120,7 +117,7 @@ public class LocationDaoTest {
         locationDao.updateLocation(fromDao);
 
         Location update = locationDao.getLocationById(loc.getLocationId());
-        assertEquals(update.getName(), minn);
+        assertEquals(update.getName(), "The Software Guild Minneapolis");
     }
 
     /**
@@ -132,15 +129,15 @@ public class LocationDaoTest {
         Location loc = new Location();
         loc.setName("Metropolis");
         loc.setDescription("City of Superman");
-        loc.setAddress("123 Metropolis Drive");
-        loc.setLatitude(42.98909);
-        loc.setLongitude(-81.234234);
+        loc.setAddress("123 Nowhere Drive");
+        loc.setLatitude(92.9847484);
+        loc.setLongitude(-61.213476);
         locationDao.addLocation(loc);
 
         Location loc2 = new Location();
         loc2.setName("Gotham");
-        loc2.setDescription("City of The Batman");
-        loc2.setAddress("456 Gotham Drive");
+        loc2.setDescription("Batman's City");
+        loc2.setAddress("9999 Gotham St.");
         loc2.setLatitude(87.9847484);
         loc2.setLongitude(-23.9898989);
         locationDao.addLocation(loc2);

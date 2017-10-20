@@ -9,8 +9,11 @@ import com.sg.superherosightings.model.Organization;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -68,6 +71,7 @@ public class OrganizationDaoImpl implements OrganizationDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteOrganization(int organizationId) {
         jdbcTemplate.update(SQL_DELETE_SUPER_ORGANIZATIONS_ORGANIZATION, organizationId);
 
@@ -76,22 +80,38 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
     @Override
     public void updateOrganization(Organization organization) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_UPDATE_ORGANIZATION,
+                organization.getName(),
+                organization.getDescription(),
+                organization.getAddress(),
+                organization.getCity(),
+                organization.getZip(),
+                organization.getPhone(),
+                organization.getEmail(),
+                organization.getOrganizationId());
     }
 
     @Override
     public Organization getOrganizationById(int organizationId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return jdbcTemplate.queryForObject(SQL_SELECT_ORGANIZATION,
+                    new LocationMapper(),
+                    organizationId);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 
     @Override
     public List<Organization> getAllOrganizations() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jdbcTemplate.query(SQL_SELECT_ALL_ORGANIZATIONS,
+                new LocationMapper());
     }
 
     @Override
     public List<Organization> getAllOrganizationsBySuper(int superId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jdbcTemplate.query(SQL_SELECT_ORGANIZATIONS_BY_SUPER_ID,
+                new LocationMapper(), superId);
     }
 
     public static final class LocationMapper implements RowMapper<Organization> {

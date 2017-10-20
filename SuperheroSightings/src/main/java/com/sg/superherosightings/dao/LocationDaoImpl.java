@@ -78,6 +78,7 @@ public class LocationDaoImpl implements LocationDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteLocation(int locationId) {
         jdbcTemplate.update(SQL_DELETE_SIGHTING_LOCATION, locationId);
 
