@@ -5,6 +5,7 @@
  */
 package com.sg.superherosightings.dao;
 
+import com.sg.superherosightings.model.Super;
 import com.sg.superherosightings.model.SuperPower;
 import java.util.List;
 import org.junit.After;
@@ -24,6 +25,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class SuperPowerDaoTest {
     
     SuperPowerDao superPowerDao;
+    SuperDao superDao;
     
     public SuperPowerDaoTest() {
     }
@@ -42,7 +44,12 @@ public class SuperPowerDaoTest {
                 = new ClassPathXmlApplicationContext("test-applicationContext.xml");
 
         superPowerDao = ctx.getBean("superPowerDao", SuperPowerDao.class);
+        superDao = ctx.getBean("superDao", SuperDao.class);
 
+        List<Super> supers = superDao.getAllSupers();
+        for (Super currentSuper : supers) {
+            superDao.deleteSuper(currentSuper.getSuperId());
+        }
         List<SuperPower> superPowers = superPowerDao.getAllSuperPowers();
         for (SuperPower currentSP : superPowers) {
             superPowerDao.deleteSuperPower(currentSP.getSuperPowerId());

@@ -27,35 +27,10 @@ public class OrganizationDaoImpl implements OrganizationDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private static final String SQL_INSERT_ORGANIZATION
-            = "insert into organization (name, description, address, city, "
-            + "zip, phone, email) values (?, ?, ?, ?, ?, ?, ?)";
-
-    private static final String SQL_DELETE_ORGANIZATION
-            = "delete from organization where organizationId = ?";
-    private static final String SQL_DELETE_SUPER_ORGANIZATIONS_ORGANIZATION/////// Is this safe?????
-            = "delete from superOrganizations where organizationId = ?";
-    private static final String SQL_UPDATE_ORGANIZATION
-            = "update organization set name = ?, description = ?, address = ?, "
-            + "city = ?, zip = ?, phone = ?, email = ? where organizationId =  ?";
-
-    private static final String SQL_SELECT_ORGANIZATION
-            = "select * from organization where organizationId = ?";
-
-    private static final String SQL_SELECT_ALL_ORGANIZATIONS
-            = "select * from organization";
-
-    private static final String SQL_SELECT_ORGANIZATIONS_BY_SUPER_ID
-            = "select o.* "
-            + "from `super` s "
-            + "inner join superorganizations so on s.superId = so.superId "
-            + "inner join organization o on so.organizationId = o.organizationId "
-            + "where s.superId = ?";
-
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addOrganization(Organization organization) {
-        jdbcTemplate.update(SQL_INSERT_ORGANIZATION, 
+        jdbcTemplate.update(PreparedStatements.SQL_INSERT_ORGANIZATION, 
                 organization.getName(),
                 organization.getDescription(),
                 organization.getAddress(),
@@ -72,16 +47,16 @@ public class OrganizationDaoImpl implements OrganizationDao {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+//    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteOrganization(int organizationId) {
-        jdbcTemplate.update(SQL_DELETE_SUPER_ORGANIZATIONS_ORGANIZATION, organizationId);
+//        jdbcTemplate.update(PreparedStatements.SQL_DELETE_ORGANIZATION_FROM_SUPERORGANIZATIONS, organizationId);
 
-        jdbcTemplate.update(SQL_DELETE_ORGANIZATION, organizationId);
+        jdbcTemplate.update(PreparedStatements.SQL_DELETE_ORGANIZATION, organizationId);
     }
 
     @Override
     public void updateOrganization(Organization organization) {
-        jdbcTemplate.update(SQL_UPDATE_ORGANIZATION,
+        jdbcTemplate.update(PreparedStatements.SQL_UPDATE_ORGANIZATION,
                 organization.getName(),
                 organization.getDescription(),
                 organization.getAddress(),
@@ -95,7 +70,7 @@ public class OrganizationDaoImpl implements OrganizationDao {
     @Override
     public Organization getOrganizationById(int organizationId) {
         try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_ORGANIZATION,
+            return jdbcTemplate.queryForObject(PreparedStatements.SQL_SELECT_ORGANIZATION,
                     new OrganizationMapper(),
                     organizationId);
         } catch (EmptyResultDataAccessException ex) {
@@ -105,13 +80,13 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
     @Override
     public List<Organization> getAllOrganizations() {
-        return jdbcTemplate.query(SQL_SELECT_ALL_ORGANIZATIONS,
+        return jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_ORGANIZATIONS,
                 new OrganizationMapper());
     }
 
     @Override
     public List<Organization> getAllOrganizationsBySuper(int superId) {
-        return jdbcTemplate.query(SQL_SELECT_ORGANIZATIONS_BY_SUPER_ID,
+        return jdbcTemplate.query(PreparedStatements.SQL_SELECT_ORGANIZATIONS_BY_SUPER_ID,
                 new OrganizationMapper(), superId);
     }
 

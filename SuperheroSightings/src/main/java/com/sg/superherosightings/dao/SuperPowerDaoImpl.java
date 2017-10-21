@@ -19,54 +19,35 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Alejandro
  */
-public class SuperPowerDaoImpl implements SuperPowerDao{
-private JdbcTemplate jdbcTemplate;
+public class SuperPowerDaoImpl implements SuperPowerDao {
+
+    private JdbcTemplate jdbcTemplate;
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    
-    private static final String SQL_INSERT_SUPERPOWER
-            = "insert into superPowers (name) "
-            + "values (?)";
-    private static final String SQL_DELETE_SUPERPOWER
-            = "delete from superPowers where superPowerId = ?";
-    private static final String SQL_DELETE_SUPERPOWER_SUPER/////// Is this safe?????
-            = "delete from super where superPowerId = ?";
-    private static final String SQL_UPDATE_SUPERPOWER
-            = "update superPowers set name = ? "
-            + "where superPowerId =  ?";
-    private static final String SQL_SELECT_SUPERPOWER
-            = "select * from superPowers where superPowerId = ?";
-    private static final String SQL_SELECT_ALL_SUPERPOWERS
-            = "select * from superPowers";
-    private static final String SQL_SELECT_SP_BY_SUPERID
-            = "select * from superPowers where superPowerId = ?";
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addSuperPower(SuperPower superPower) {
-        jdbcTemplate.update(SQL_INSERT_SUPERPOWER,
+        jdbcTemplate.update(PreparedStatements.SQL_INSERT_SUPERPOWER,
                 superPower.getName());
-        
+
         int superPowerId
                 = jdbcTemplate.queryForObject("select LAST_INSERT_ID()",
                         Integer.class);
-        
+
         superPower.setSuperPowerId(superPowerId);
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteSuperPower(int superPowerId) {
-        jdbcTemplate.update(SQL_DELETE_SUPERPOWER, superPowerId);
-        
-        jdbcTemplate.update(SQL_DELETE_SUPERPOWER_SUPER, superPowerId);
+        jdbcTemplate.update(PreparedStatements.SQL_DELETE_SUPERPOWER, superPowerId);
     }
 
     @Override
     public void updateSuperPower(SuperPower superPower) {
-        jdbcTemplate.update(SQL_UPDATE_SUPERPOWER, 
+        jdbcTemplate.update(PreparedStatements.SQL_UPDATE_SUPERPOWER,
                 superPower.getName(),
                 superPower.getSuperPowerId());
     }
@@ -74,7 +55,7 @@ private JdbcTemplate jdbcTemplate;
     @Override
     public SuperPower getSuperPowerById(int superPowerId) {
         try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_SUPERPOWER,
+            return jdbcTemplate.queryForObject(PreparedStatements.SQL_SELECT_SUPERPOWER,
                     new SuperPowerMapper(),
                     superPowerId);
         } catch (EmptyResultDataAccessException ex) {
@@ -84,21 +65,21 @@ private JdbcTemplate jdbcTemplate;
 
     @Override
     public List<SuperPower> getAllSuperPowers() {
-        return jdbcTemplate.query(SQL_SELECT_ALL_SUPERPOWERS,
+        return jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_SUPERPOWERS,
                 new SuperPowerMapper());
     }
 
     @Override
     public SuperPower getSuperPowerBySuperId(Integer superId) {
         try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_SP_BY_SUPERID,
+            return jdbcTemplate.queryForObject(PreparedStatements.SQL_SELECT_SP_BY_SUPERID,
                     new SuperPowerMapper(),
                     superId);
         } catch (EmptyResultDataAccessException ex) {
             return null;
         }
     }
-    
+
     public static final class SuperPowerMapper implements RowMapper<SuperPower> {
 
         @Override
