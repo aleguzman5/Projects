@@ -135,7 +135,7 @@ public class PreparedStatements {
     protected static final String SQL_SELECT_SIGHTING
             = "select * from sighting where sightingId = ?";
     protected static final String SQL_SELECT_ALL_SIGHTINGS
-            = "select * from sightings";
+            = "select * from sighting";
     protected static final String SQL_SELECT_ALL_SIGHTINGS_BY_SUPER_ID
             = "select si.* from sighting si "
             + "inner join supersighting ss on si.sightingId = ss.sightingId "
@@ -145,4 +145,12 @@ public class PreparedStatements {
             = "select si.* from sighting si "
             + "inner join location l on si.locationId = l.locationId "
             + "where l.locationId = ?";
+    protected static final String SQL_SELECT_SIGHTINGS_ON_PARTICULAR_DATE
+            = "select si.* from sighting si"
+            + "where si.sightingDate = ?";
+    protected static final String SQL_SELECT_SUPERS_ON_PARTICULAR_DATE_AND_LOCATION
+            = "select s.* from `super` s "
+            + "inner join supersighting ss on s.superId = ss.superId "
+            + "inner join sighting si on ss.sightingId = si.sightingId "
+            + "where si.sightingDate = ? and si.locationId = ?";
 }

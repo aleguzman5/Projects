@@ -55,4 +55,8 @@
           class="com.sg.superherosightings.dao.SuperDaoImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
+    <bean id="sightingDao" 
+          class="com.sg.superherosightings.dao.SightingDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
 </beans>

@@ -31,7 +31,8 @@ public class SuperDaoImpl implements SuperDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private void insertSuperOrganizations(Super superh) {
+    @Override
+    public void insertSuperOrganizations(Super superh) {
         final int superId = superh.getSuperId();
         final List<Organization> organizations = superh.getOrganizations();
 
@@ -42,19 +43,22 @@ public class SuperDaoImpl implements SuperDao {
         }
     }
 
-    private List<Organization> findOrganizationsForSuper(Super superh) {
+    @Override
+    public List<Organization> findOrganizationsForSuper(Super superh) {
         return jdbcTemplate.query(PreparedStatements.SQL_SELECT_ORGANIZATIONS_BY_SUPER_ID,
                 new OrganizationMapper(),
                 superh.getSuperId());
     }
 
-    private SuperPower findSuperPowerForSuper(Super superh) {
+    @Override
+    public SuperPower findSuperPowerForSuper(Super superh) {
         return jdbcTemplate.queryForObject(PreparedStatements.SQL_SELECT_SP_BY_SUPERID,
                 new SuperPowerMapper(),
                 superh.getSuperId());
     }
 
-    private List<Super> associateSuperPowerAndOrganizationsWithSuper(List<Super> superList) {
+    @Override
+    public List<Super> associateSuperPowerAndOrganizationsWithSuper(List<Super> superList) {
         for (Super currentSuper : superList) {
             currentSuper.setOrganizations(findOrganizationsForSuper(currentSuper));
             currentSuper.setSuperPower(findSuperPowerForSuper(currentSuper));
@@ -117,16 +121,16 @@ public class SuperDaoImpl implements SuperDao {
 
     @Override
     public List<Super> getAllSuperByLocationId(int locationId) {
-        List<Super> superList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_SUPER_BY_LOCATIONID, 
-                new SuperMapper(), 
+        List<Super> superList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_SUPER_BY_LOCATIONID,
+                new SuperMapper(),
                 locationId);
         return associateSuperPowerAndOrganizationsWithSuper(superList);
     }
 
     @Override
     public List<Super> getAllSuperByOrganization(int organizationId) {
-        List<Super> superList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_SUPERS_BY_ORGANIZATION_ID, 
-                new SuperMapper(), 
+        List<Super> superList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_SUPERS_BY_ORGANIZATION_ID,
+                new SuperMapper(),
                 organizationId);
         return associateSuperPowerAndOrganizationsWithSuper(superList);
     }

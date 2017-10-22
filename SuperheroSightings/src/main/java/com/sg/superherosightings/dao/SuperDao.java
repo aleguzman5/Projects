@@ -5,7 +5,9 @@
  */
 package com.sg.superherosightings.dao;
 
+import com.sg.superherosightings.model.Organization;
 import com.sg.superherosightings.model.Super;
+import com.sg.superherosightings.model.SuperPower;
 import java.util.List;
 
 /**
@@ -27,4 +29,13 @@ public interface SuperDao {
     public List<Super> getAllSuperByLocationId(int locationId);
 
     public List<Super> getAllSuperByOrganization(int organizationId);
+    
+    //Helper methods
+    public void insertSuperOrganizations(Super superh);
+    
+    public List<Organization> findOrganizationsForSuper(Super superh);
+    
+    public SuperPower findSuperPowerForSuper(Super superh);
+    
+    public List<Super> associateSuperPowerAndOrganizationsWithSuper(List<Super> superList);
 }

@@ -12,7 +12,9 @@ import com.sg.superherosightings.model.Sighting;
 import com.sg.superherosightings.model.Super;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
+import javax.inject.Inject;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -26,7 +28,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class SightingDaoImpl implements SightingDao {
     
     private JdbcTemplate jdbcTemplate;
+    SuperDao superDao;
 
+    @Inject
+    public SightingDaoImpl (SuperDao superDao) {
+        this.superDao = superDao;
+    }
+    
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -43,9 +51,10 @@ public class SightingDaoImpl implements SightingDao {
     }
 
     private List<Super> findSupersForSighting(Sighting sighting) {
-        return jdbcTemplate.query(PreparedStatements.SQL_SELECT_SUPER_BY_SIGHTING_ID,
+        List<Super> superList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_SUPER_BY_SIGHTING_ID,
                 new SuperMapper(),
                 sighting.getSightingId());
+        return superDao.associateSuperPowerAndOrganizationsWithSuper(superList);
     }
 
     private Location findLocationForSighting(Sighting sighting) {
@@ -128,6 +137,22 @@ public class SightingDaoImpl implements SightingDao {
                 new SightingMapper(),
                 superId);
         return associateLocationAndSupersWithSighting(sightingList);
+    }
+
+    @Override
+    public List<Sighting> findSightingsForParticularDate(LocalDate date) {
+        List<Sighting> sightingList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_SIGHTINGS_ON_PARTICULAR_DATE,
+                new SightingMapper(),
+                date);
+        return associateLocationAndSupersWithSighting(sightingList);
+    }
+
+    @Override
+    public List<Super> findSupersForParticularLocationAndDate(Location location, LocalDate date) {
+        List<Super> supers = jdbcTemplate.query(PreparedStatements.SQL_SELECT_SUPERS_ON_PARTICULAR_DATE_AND_LOCATION,
+                new SuperMapper(),
+                date, location.getLocationId());
+        return superDao.associateSuperPowerAndOrganizationsWithSuper(supers);
     }
     
     public static final class SightingMapper implements RowMapper<Sighting> {

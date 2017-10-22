@@ -5,7 +5,10 @@
  */
 package com.sg.superherosightings.dao;
 
+import com.sg.superherosightings.model.Location;
 import com.sg.superherosightings.model.Sighting;
+import com.sg.superherosightings.model.Super;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -28,8 +31,10 @@ public interface SightingDao {
     
     public List<Sighting> getAllSightingBySuperId(int superId);
 
-//    public Location findLocationOfSighting(Sighting sighting);
-//    
+    public List<Sighting> findSightingsForParticularDate(LocalDate date);
+    
+    public List<Super> findSupersForParticularLocationAndDate(Location location, LocalDate date);
+    
 //    public List<Super> findSuperAtSighting(Sighting sighting);
 //    
 //    public Location getLocationBySightingID(int sightingId);
