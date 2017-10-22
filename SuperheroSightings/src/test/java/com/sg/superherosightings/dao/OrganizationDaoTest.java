@@ -6,6 +6,7 @@
 package com.sg.superherosightings.dao;
 
 import com.sg.superherosightings.model.Organization;
+import com.sg.superherosightings.model.Super;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -24,6 +25,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class OrganizationDaoTest {
 
     OrganizationDao organizationDao;
+    SuperDao superDao;
 
     public OrganizationDaoTest() {
     }
@@ -42,7 +44,12 @@ public class OrganizationDaoTest {
                 = new ClassPathXmlApplicationContext("test-applicationContext.xml");
 
         organizationDao = ctx.getBean("organizationDao", OrganizationDao.class);
+        superDao = ctx.getBean("superDao", SuperDao.class);
 
+        List<Super> supers = superDao.getAllSupers();
+        for (Super currentSuper : supers) {
+            superDao.deleteSuper(currentSuper.getSuperId());
+        }
         List<Organization> organizations = organizationDao.getAllOrganizations();
         for (Organization currentOrganization : organizations) {
             organizationDao.deleteOrganization(currentOrganization.getOrganizationId());

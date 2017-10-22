@@ -265,8 +265,8 @@ public class SuperDaoTest {
         organizationDao.addOrganization(org2);
         
         Super s = new Super();
-        s.setName("Batman");
-        s.setDescription("Even better");
+        s.setName("Superman");
+        s.setDescription("Stronger");
         s.setSuperPower(sp);
         List<Organization> organizations = new ArrayList<>();
         organizations.add(org);
