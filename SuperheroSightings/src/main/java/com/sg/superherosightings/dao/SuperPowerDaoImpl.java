@@ -70,7 +70,7 @@ public class SuperPowerDaoImpl implements SuperPowerDao {
     }
 
     @Override
-    public SuperPower getSuperPowerBySuperId(Integer superId) {
+    public SuperPower getSuperPowerBySuperId(int superId) {
         try {
             return jdbcTemplate.queryForObject(PreparedStatements.SQL_SELECT_SP_BY_SUPERID,
                     new SuperPowerMapper(),

@@ -5,8 +5,10 @@
  */
 package com.sg.superherosightings.dao;
 
+import com.sg.superherosightings.model.Organization;
 import com.sg.superherosightings.model.Super;
 import com.sg.superherosightings.model.SuperPower;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -26,6 +28,7 @@ public class SuperPowerDaoTest {
     
     SuperPowerDao superPowerDao;
     SuperDao superDao;
+    OrganizationDao organizationDao;
     
     public SuperPowerDaoTest() {
     }
@@ -45,6 +48,7 @@ public class SuperPowerDaoTest {
 
         superPowerDao = ctx.getBean("superPowerDao", SuperPowerDao.class);
         superDao = ctx.getBean("superDao", SuperDao.class);
+        organizationDao = ctx.getBean("organizationDao", OrganizationDao.class);
 
         List<Super> supers = superDao.getAllSupers();
         for (Super currentSuper : supers) {
@@ -131,5 +135,44 @@ public class SuperPowerDaoTest {
      */
     @Test
     public void testGetSuperPowerBySuperId() {
+        
+        SuperPower sp = new SuperPower();
+        sp.setName("Fly");
+        SuperPower sp2 = new SuperPower();
+        sp2.setName("Gadgets");
+
+        superPowerDao.addSuperPower(sp);
+        superPowerDao.addSuperPower(sp2);
+
+        Organization org = new Organization();
+        org.setName("Avengers");
+        org.setDescription("The best");
+        org.setAddress("123 Imaginary World");
+        org.setCity("No Land");
+        org.setZip(11111);
+        org.setPhone(222222222);
+
+        organizationDao.addOrganization(org);
+
+        Super s = new Super();
+        s.setName("Batman");
+        s.setDescription("Even better");
+        s.setSuperPower(sp2);
+        List<Organization> organizations = new ArrayList<>();
+        organizations.add(org);
+        s.setOrganizations(organizations);
+
+        Super s2 = new Super();
+        s2.setName("Superman");
+        s2.setDescription("Stronger");
+        s2.setSuperPower(sp);
+        s2.setOrganizations(organizations);
+        
+        superDao.addSuper(s);
+        superDao.addSuper(s2);
+        
+        SuperPower sP = new SuperPower();
+        sP = superPowerDao.getSuperPowerById(s2.getSuperId());
+        assertEquals("Fly", sP.getName());
     }
 }

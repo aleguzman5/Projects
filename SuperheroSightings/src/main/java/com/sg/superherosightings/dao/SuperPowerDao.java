@@ -23,5 +23,5 @@ public interface SuperPowerDao {
 
     public List<SuperPower> getAllSuperPowers();
     
-    public SuperPower getSuperPowerBySuperId(Integer superId);
+    public SuperPower getSuperPowerBySuperId(int superId);
 }

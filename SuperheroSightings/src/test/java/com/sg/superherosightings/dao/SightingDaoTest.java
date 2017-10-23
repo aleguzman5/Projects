@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -135,6 +136,7 @@ public class SightingDaoTest {
     }
 
     @Test
+    //@Ignore
     public void testDeleteSighting() {
         SuperPower sp = new SuperPower();
         sp.setName("Fly");
@@ -188,6 +190,7 @@ public class SightingDaoTest {
     }
 
     @Test
+    //@Ignore
     public void testUpdateSighting() {
         SuperPower sp = new SuperPower();
         sp.setName("Fly");
