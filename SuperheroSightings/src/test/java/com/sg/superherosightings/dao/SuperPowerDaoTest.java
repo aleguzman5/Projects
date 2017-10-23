@@ -172,7 +172,7 @@ public class SuperPowerDaoTest {
         superDao.addSuper(s2);
         
         SuperPower sP = new SuperPower();
-        sP = superPowerDao.getSuperPowerById(s2.getSuperId());
+        sP = superPowerDao.getSuperPowerBySuperId(s2.getSuperId());
         assertEquals("Fly", sP.getName());
     }
 }
