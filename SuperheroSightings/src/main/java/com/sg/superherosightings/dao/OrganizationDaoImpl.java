@@ -47,9 +47,9 @@ public class OrganizationDaoImpl implements OrganizationDao {
     }
 
     @Override
-//    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteOrganization(int organizationId) {
-//        jdbcTemplate.update(PreparedStatements.SQL_DELETE_ORGANIZATION_FROM_SUPERORGANIZATIONS, organizationId);
+        jdbcTemplate.update(PreparedStatements.SQL_DELETE_ORGANIZATION_FROM_SUPERORGANIZATIONS, organizationId);
 
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_ORGANIZATION, organizationId);
     }

@@ -31,9 +31,9 @@ public interface SightingDao {
     
     public List<Sighting> getAllSightingBySuperId(int superId);
 
-    public List<Sighting> findSightingsForParticularDate(LocalDate date);
+    public List<Sighting> findSightingsForParticularDate(String date);
     
-    public List<Super> findSupersForParticularLocationAndDate(Location location, LocalDate date);
+    public List<Super> findSupersForParticularLocationAndDate(Location location, String date);
     
 //    public List<Super> findSuperAtSighting(Sighting sighting);
 //    

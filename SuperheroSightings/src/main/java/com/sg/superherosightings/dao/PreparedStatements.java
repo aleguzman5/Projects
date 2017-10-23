@@ -98,6 +98,8 @@ public class PreparedStatements {
             = "delete from `super` where superId = ?";
     protected static final String SQL_DELETE_SUPER_FROM_SUPERORGANIZATIONS
             = "delete from superOrganizations where superId = ?";
+    protected static final String SQL_DELETE_SUPER_FROM_SUPERSIGHTINGS
+            = "delete from superSighting where superId = ?";
     protected static final String SQL_UPDATE_SUPER
             = "update `super` set name = ?, description = ?, "
             + "superPowerId = ? "
@@ -146,7 +148,7 @@ public class PreparedStatements {
             + "inner join location l on si.locationId = l.locationId "
             + "where l.locationId = ?";
     protected static final String SQL_SELECT_SIGHTINGS_ON_PARTICULAR_DATE
-            = "select si.* from sighting si"
+            = "select si.* from sighting si "
             + "where si.sightingDate = ?";
     protected static final String SQL_SELECT_SUPERS_ON_PARTICULAR_DATE_AND_LOCATION
             = "select s.* from `super` s "

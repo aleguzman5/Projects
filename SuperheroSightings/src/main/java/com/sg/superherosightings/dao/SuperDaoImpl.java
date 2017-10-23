@@ -81,8 +81,10 @@ public class SuperDaoImpl implements SuperDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteSuper(int superId) {
+        jdbcTemplate.update(PreparedStatements.SQL_DELETE_SUPER_FROM_SUPERSIGHTINGS, superId);
+        
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_SUPER_FROM_SUPERORGANIZATIONS, superId);
-
+        
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_SUPER, superId);
     }
 

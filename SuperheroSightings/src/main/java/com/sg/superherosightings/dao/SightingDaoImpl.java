@@ -140,7 +140,7 @@ public class SightingDaoImpl implements SightingDao {
     }
 
     @Override
-    public List<Sighting> findSightingsForParticularDate(LocalDate date) {
+    public List<Sighting> findSightingsForParticularDate(String date) {
         List<Sighting> sightingList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_SIGHTINGS_ON_PARTICULAR_DATE,
                 new SightingMapper(),
                 date);
@@ -148,7 +148,7 @@ public class SightingDaoImpl implements SightingDao {
     }
 
     @Override
-    public List<Super> findSupersForParticularLocationAndDate(Location location, LocalDate date) {
+    public List<Super> findSupersForParticularLocationAndDate(Location location, String date) {
         List<Super> supers = jdbcTemplate.query(PreparedStatements.SQL_SELECT_SUPERS_ON_PARTICULAR_DATE_AND_LOCATION,
                 new SuperMapper(),
                 date, location.getLocationId());
