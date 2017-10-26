@@ -35,11 +35,13 @@ public class SuperDaoImpl implements SuperDao {
     public void insertSuperOrganizations(Super superh) {
         final int superId = superh.getSuperId();
         final List<Organization> organizations = superh.getOrganizations();
-
-        for (Organization currentOrg : organizations) {
-            jdbcTemplate.update(PreparedStatements.SQL_INSERT_SUPERORGANIZATIONS,
-                    currentOrg.getOrganizationId(),
-                    superId);
+        try {
+            for (Organization currentOrg : organizations) {
+                jdbcTemplate.update(PreparedStatements.SQL_INSERT_SUPERORGANIZATIONS,
+                        currentOrg.getOrganizationId(),
+                        superId);
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -82,9 +84,9 @@ public class SuperDaoImpl implements SuperDao {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteSuper(int superId) {
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_SUPER_FROM_SUPERSIGHTINGS, superId);
-        
+
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_SUPER_FROM_SUPERORGANIZATIONS, superId);
-        
+
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_SUPER, superId);
     }
 

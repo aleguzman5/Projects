@@ -5,7 +5,9 @@
  */
 package com.sg.superherosightings.dao;
 
+import com.sg.superherosightings.dao.SightingDaoImpl.SightingMapper;
 import com.sg.superherosightings.model.Location;
+import com.sg.superherosightings.model.Sighting;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -47,8 +49,14 @@ public class LocationDaoImpl implements LocationDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteLocation(int locationId) {
+        List<Sighting> sightingList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_SIGHTINGS_BY_LOCATION_ID, new SightingMapper(), locationId);
+        
+        for (Sighting s : sightingList) {
+            jdbcTemplate.update(PreparedStatements.SQL_DELETE_SIGHTING_FROM_SUPERSIGHTING, s.getSightingId());
+        }
+        
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_SIGHTING_LOCATION, locationId);
-
+        
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_LOCATION, locationId);
     }
 
