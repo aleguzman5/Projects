@@ -65,6 +65,16 @@
                                             </c:forEach><br>
                                         </c:forEach>
                                     </td>
+                                    <td>
+                                        <a href="displayEditSighting?sightingId=${sighting.sightingId}">
+                                            Edit
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="deleteSighting?sightingId=${sighting.sightingId}">
+                                            Delete
+                                        </a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -76,16 +86,16 @@
                     <form class="form-horizontal" 
                           role="form" 
                           method="POST" 
-                          action="/sightingAdd/add">
+                          action="createSighting">
 
                         <div class="form-group">
                             <label for="add-superHuman" 
                                    class="col-md-4 control-label">
-                                Super Human:
+                                Super Humans:
                             </label>
                             <div class="col-md-8">
                                 <select multiple class="form-control" 
-                                        name="superId" 
+                                        name="superIds" 
                                         placeholder="Batman"
                                         required>
                                     <c:forEach var="hero" items="${superList}">
@@ -104,7 +114,8 @@
                                 <input type="Date" 
                                        class="form-control" 
                                        name="sightingDate" 
-                                       placeholder="YYYYMMDD"/>
+                                       placeholder="YYYYMMDD"
+                                       required/>
                             </div>
                         </div>
 
@@ -127,7 +138,7 @@
                                 <input type="submit" 
                                        id="add-sighting" 
                                        formmethod="POST" 
-                                       formaction="sightingAdd/add" 
+                                       formaction="createSighting" 
                                        class="btn btn-primary" 
                                        value="Add New Sighting"/>
                             </div>

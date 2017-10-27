@@ -13,17 +13,7 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/home.css">
 
-        <!--        <style>
-                    h1 {
-                        text-align: center;
-                    }
-        
-                    .footer{
-                        margin-top: 20px;
-                    }
-                </style>-->
         <title>Edit Location</title>
     </head>
     <body>
@@ -84,7 +74,7 @@
                                           path="address"/>
                             </div>
                         </div>
-                            
+
                         <div>
                             <div class="form-group">
                                 <label for="latitude" class="col-md-2 control-label">
@@ -131,11 +121,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-</div>                                        
-</div>
-</body>
-<script src="js/jquery-3.1.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+    </body>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </html>

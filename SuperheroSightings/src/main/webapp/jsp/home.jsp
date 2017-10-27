@@ -19,6 +19,9 @@
             /*            body {
                             background-image: url("jsp/heroes.jpg");
                         }*/
+            p {
+                font-size: 200%;
+            }
         </style>
     </head>
     <body>
@@ -36,6 +39,13 @@
             <!-- Main Page Content Start -->
             <div class="row">
                 <div class="col-md-12">
+                    <p style="text-align: center">
+                        Have you seen a Superhero or a Villain? Help us track all the activity around the world! 
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
                     <br><h3>Latest Super Hero/Villain Sightings</h3>
                     <table id="sightingsTable" class="table table-hover">
                         <tr>
@@ -69,7 +79,13 @@
                             </c:forEach>
                         </tbody>
                     </table>                     
-                </div> <!-- End col div --> 
+                </div> <!-- End col div -->
+                <div class="col-md-6">
+                    <br><br><br>
+                    <iframe width="600" height="600" frameborder="0" style="border:0"
+                            src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJCzYy5IS16lQRQrfeQ5K5Oxw&key=AIzaSyDQV9rwKo6GUcIQTnNS3o5s3it7fBA-z7M" allowfullscreen>
+                    </iframe>
+                </div>
             </div>  <!-- End row div --> 
             <!-- Main Page Content Stop -->  
         </div>

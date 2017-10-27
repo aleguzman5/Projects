@@ -35,7 +35,6 @@
                 <label> Longitude: </label><c:out value=" ${location.longitude}"/>
             </p>
         </div>
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-8">
                 <!--Go Back Button-->
                 <div class="form-group">
@@ -43,7 +42,8 @@
                         <input type="submit"
                                class="btn btn-primary"
                                id="edit-organization"
-                               value="Go Back"/>
+                               value="Go Back"
+                               style="margin-left: 60px"/>
                     </form>
                 </div>
             </div>

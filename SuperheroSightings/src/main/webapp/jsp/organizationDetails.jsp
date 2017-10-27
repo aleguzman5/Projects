@@ -49,7 +49,8 @@
                         <input type="submit"
                                class="btn btn-primary"
                                id="edit-organization"
-                               value="Go Back"/>
+                               value="Go Back"
+                               style="margin-left: 60px"/>
                     </form>
                 </div>
             </div>

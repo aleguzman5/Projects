@@ -47,7 +47,6 @@
                                       path="superId"/>
                         </div>
 
-                        <!--Organization Name-->
                         <div class="form-group">
                             <label for="name" class="col-md-2 control-label">Super Name:</label>
                             <div class="col-md-5">
@@ -74,9 +73,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="pwrList" class="col-md-2 control-label">Super Name:</label>
+                            <label for="pwrList" class="col-md-2 control-label">Super Power:</label>
                             <div class="col-md-5">
-                                <select class="form-control" id="pwrList">
+                                <select class="form-control" name="pwrList">
                                 <c:forEach var="superPower" items="${spList}">
                                     <c:choose>
                                         <c:when test="${hero
@@ -101,7 +100,7 @@
                         <div class="form-group">
                             <label for="orgList" class="col-md-2 control-label">Organizations</label>
                             <div class="col-md-5">
-                                <select multiple class="form-control" id="orgList">
+                                <select multiple class="form-control" name="orgList">
                                     <c:forEach var="org" items="${organizations}">
                                         <c:set var="isSelected" value="false"/>
                                         <c:forEach var="personOrgs" items="${hero.organizations}">
@@ -131,7 +130,7 @@
                             <div class="col-md-offset-2 col-md-8">
                                 <input type="submit"
                                        class="btn btn-primary"
-                                       id="edit-organization"
+                                       id="edit-super"
                                        action="editSuper"/>
                                 <!--Cancel Button-->
                                 <button class="btn btn-primary"
@@ -145,10 +144,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-</div>                                        
-</div>
 </body>
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

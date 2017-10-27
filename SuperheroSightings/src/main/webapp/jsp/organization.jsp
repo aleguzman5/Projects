@@ -60,7 +60,6 @@
                                 </td>
                                 <td>
                                     <a href="displayEditOrganization?organizationId=${currentOrganization.organizationId}">
-                                        <!--check this-->
                                         Edit
                                     </a>
                                 </td>

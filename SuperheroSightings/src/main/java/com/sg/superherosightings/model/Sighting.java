@@ -6,8 +6,11 @@
 package com.sg.superherosightings.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  *
@@ -16,6 +19,7 @@ import java.util.Objects;
 public class Sighting {
     
     private int sightingId;
+    @DateTimeFormat(iso = ISO.DATE)
     private LocalDate date;
     private Location location;
     private List<Super> supers;

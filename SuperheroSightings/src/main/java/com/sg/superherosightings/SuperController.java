@@ -88,12 +88,12 @@ public class SuperController {
     }
 
     @RequestMapping(value = "editSuper", method = RequestMethod.POST)
-    public String editOrganization(@ModelAttribute("hero") Super superP, HttpServletRequest request, BindingResult result) {
+    public String editSuper(@ModelAttribute("hero") Super superP, HttpServletRequest request, BindingResult result) {
 
-        int spId = Integer.parseInt(request.getParameter("superPowerId"));
+        int spId = Integer.parseInt(request.getParameter("pwrList"));
         superP.setSuperPower(superPowerDao.getSuperPowerById(spId));
         List<Organization> orgs = new ArrayList<>();
-        String[] orgIds = request.getParameterValues("organizationId");
+        String[] orgIds = request.getParameterValues("orgList");
         
         try {
             for (String currentOrgId : orgIds) {
