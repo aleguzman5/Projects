@@ -112,7 +112,7 @@
                         <div class="form-group">
                             <label for="organizationPhone" class="col-md-4 control-label">Phone:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="organizationPhone" placeholder="Phone"/>
+                                <input type="email" class="form-control" name="organizationPhone" placeholder="Phone"/>
                             </div>
                         </div>
                         <div class="form-group">

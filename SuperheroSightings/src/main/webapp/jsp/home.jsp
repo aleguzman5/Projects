@@ -55,10 +55,9 @@
                     <br><h3>Latest Super Hero/Villain Sightings</h3>
                     <table id="sightingsTable" class="table table-hover">
                         <tr>
-                            <th width="25%">Date</th>
-                            <th width="25%">Location</th>
-                            <th width="25%">Supers</th>
-                            <th width="25%">Organization</th>
+                            <th width="33%">Date</th>
+                            <th width="33%">Location</th>
+                            <th width="34%">Supers</th>
                         </tr>
                         <tbody id="content-rows">
                             <c:forEach var="sighting" items="${sightingList}" varStatus="theCount">
@@ -74,13 +73,7 @@
                                             <c:out value="${hero.name}"/><br><br>
                                         </c:forEach>
                                     </td>
-                                    <td>
-                                        <c:forEach var="hero" items="${sighting.supers}">
-                                            <c:forEach var="org" items="${hero.organizations}">
-                                                <c:out value="${org.name}"/><br>
-                                            </c:forEach><br>
-                                        </c:forEach>
-                                    </td>
+                                    
                                     <td>
                                         <input type="number" hidden value="${sighting.location.latitude}"
                                                id="sighting-${theCount.count}-latitude"/>
@@ -107,7 +100,7 @@
                                 center: uluru,
                                 mapTypeId: 'terrain'
                             });
-                            for (var i = 2; i <= 10; i++) {
+                            for (var i = 1; i <= 10; i++) {
                                 var latitude = parseFloat(document.getElementById('sighting-' + i + '-latitude').value);
                                 var longitude = parseFloat(document.getElementById('sighting-' + i + '-longitude').value);
                                 var uluru = {lat: latitude, lng: longitude};

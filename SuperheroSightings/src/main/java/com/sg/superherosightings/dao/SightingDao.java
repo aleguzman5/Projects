@@ -35,15 +35,5 @@ public interface SightingDao {
     
     public List<Super> findSupersForParticularLocationAndDate(Location location, String date);
     
-//    public List<Super> findSuperAtSighting(Sighting sighting);
-//    
-//    public Location getLocationBySightingID(int sightingId);
-//    
-//    public Organization getOrganizationBySightingID(int sightingId);
-//    
-//    public Super getSuperBySightingID(int sightingId);
-//    
-//    public List<Sighting> displayLocationSupersAndSightings(List<Sighting> sightingList);
-//    
-//    public List<SuperHeroSighting> getAllSightingsByDate();
+    public List<Sighting> findLastSightings();
 }

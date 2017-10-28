@@ -155,4 +155,7 @@ public class PreparedStatements {
             + "inner join supersighting ss on s.superId = ss.superId "
             + "inner join sighting si on ss.sightingId = si.sightingId "
             + "where si.sightingDate = ? and si.locationId = ?";
+    protected static final String SQL_SELECT_MOST_RECENT_SIGHTINGS
+            = "select * from sighting s "
+            + "order by s.sightingDate desc limit 10";
 }

@@ -26,15 +26,15 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Alejandro
  */
 public class SightingDaoImpl implements SightingDao {
-    
+
     private JdbcTemplate jdbcTemplate;
     SuperDao superDao;
 
     @Inject
-    public SightingDaoImpl (SuperDao superDao) {
+    public SightingDaoImpl(SuperDao superDao) {
         this.superDao = superDao;
     }
-    
+
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -70,23 +70,23 @@ public class SightingDaoImpl implements SightingDao {
         }
         return sightingList;
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addSighting(Sighting sighting) {
         jdbcTemplate.update(PreparedStatements.SQL_INSERT_SIGTHING,
                 sighting.getLocation().getLocationId(),
                 sighting.getDate().toString());
-        sighting.setSightingId(jdbcTemplate.queryForObject("select LAST_INSERT_ID()", 
+        sighting.setSightingId(jdbcTemplate.queryForObject("select LAST_INSERT_ID()",
                 Integer.class));
         insertSightingSupers(sighting);
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteSighting(int sightingId) {
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_SIGHTING_FROM_SUPERSIGHTING, sightingId);
-        
+
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_SIGTHING, sightingId);
     }
 
@@ -99,13 +99,13 @@ public class SightingDaoImpl implements SightingDao {
                 sighting.getSightingId());
         jdbcTemplate.update(PreparedStatements.SQL_DELETE_SIGHTING_FROM_SUPERSIGHTING, sighting.getSightingId());
         insertSightingSupers(sighting);
-        
+
     }
-    
+
     @Override
     public Sighting getSightingById(int sightingId) {
         try {
-            Sighting sighting = jdbcTemplate.queryForObject(PreparedStatements.SQL_SELECT_SIGHTING, 
+            Sighting sighting = jdbcTemplate.queryForObject(PreparedStatements.SQL_SELECT_SIGHTING,
                     new SightingMapper(),
                     sightingId);
             sighting.setSupers(findSupersForSighting(sighting));
@@ -118,14 +118,14 @@ public class SightingDaoImpl implements SightingDao {
 
     @Override
     public List<Sighting> getAllSightings() {
-        List<Sighting> sightingList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_SIGHTINGS, 
+        List<Sighting> sightingList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_SIGHTINGS,
                 new SightingMapper());
         return associateLocationAndSupersWithSighting(sightingList);
     }
 
     @Override
     public List<Sighting> getAllSightingByLocationId(int locationId) {
-        List<Sighting> sightingList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_SIGHTINGS_BY_LOCATION_ID, 
+        List<Sighting> sightingList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_ALL_SIGHTINGS_BY_LOCATION_ID,
                 new SightingMapper(),
                 locationId);
         return associateLocationAndSupersWithSighting(sightingList);
@@ -154,7 +154,14 @@ public class SightingDaoImpl implements SightingDao {
                 date, location.getLocationId());
         return superDao.associateSuperPowerAndOrganizationsWithSuper(supers);
     }
-    
+
+    @Override
+    public List<Sighting> findLastSightings() {
+        List<Sighting> sightingList = jdbcTemplate.query(PreparedStatements.SQL_SELECT_MOST_RECENT_SIGHTINGS,
+                new SightingMapper());
+        return associateLocationAndSupersWithSighting(sightingList);
+    }
+
     public static final class SightingMapper implements RowMapper<Sighting> {
 
         @Override
