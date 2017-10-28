@@ -16,11 +16,17 @@
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet"> 
         <style type = "text/css">
-            /*            body {
-                            background-image: url("jsp/heroes.jpg");
-                        }*/
+/*            body {
+                background-image: url("jsp/heroes.jpg");
+            }*/
+            #map {
+                width: 600px;
+                height: 600px;
+                background-color: grey;
+            }
             p {
-                font-size: 200%;
+                font-size: 180%;
+                font-weight: bold;
             }
         </style>
     </head>
@@ -55,7 +61,7 @@
                             <th width="25%">Organization</th>
                         </tr>
                         <tbody id="content-rows">
-                            <c:forEach var="sighting" items="${sightingList}">
+                            <c:forEach var="sighting" items="${sightingList}" varStatus="theCount">
                                 <tr>
                                     <td>
                                         <c:out value="${sighting.date}"/>
@@ -75,6 +81,12 @@
                                             </c:forEach><br>
                                         </c:forEach>
                                     </td>
+                                    <td>
+                                        <input type="number" hidden value="${sighting.location.latitude}"
+                                               id="sighting-${theCount.count}-latitude"/>
+                                        <input type="number" hidden value="${sighting.location.longitude}"
+                                               id="sighting-${theCount.count}-longitude"/>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -82,9 +94,32 @@
                 </div> <!-- End col div -->
                 <div class="col-md-6">
                     <br><br><br>
-                    <iframe width="600" height="600" frameborder="0" style="border:0"
-                            src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJCzYy5IS16lQRQrfeQ5K5Oxw&key=AIzaSyDQV9rwKo6GUcIQTnNS3o5s3it7fBA-z7M" allowfullscreen>
-                    </iframe>
+                    <div id="map"></div>
+                    <script>
+                        function initMap() {
+
+                            var latitude = parseFloat(document.getElementById('sighting-1-latitude').value);
+                            var longitude = parseFloat(document.getElementById('sighting-1-longitude').value);
+                            console.log(latitude, longitude);
+                            var uluru = {lat: latitude, lng: longitude};
+                            var map = new google.maps.Map(document.getElementById('map'), {
+                                zoom: 6,
+                                center: uluru,
+                                mapTypeId: 'terrain'
+                            });
+                            for (var i = 2; i <= 10; i++) {
+                                var latitude = parseFloat(document.getElementById('sighting-' + i + '-latitude').value);
+                                var longitude = parseFloat(document.getElementById('sighting-' + i + '-longitude').value);
+                                var uluru = {lat: latitude, lng: longitude};
+                                var marker = new google.maps.Marker({
+                                    position: uluru,
+                                    map: map
+                                });
+                            }
+                        }
+                    </script>
+                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQV9rwKo6GUcIQTnNS3o5s3it7fBA-z7M&callback=initMap">
+                    </script>
                 </div>
             </div>  <!-- End row div --> 
             <!-- Main Page Content Stop -->  
