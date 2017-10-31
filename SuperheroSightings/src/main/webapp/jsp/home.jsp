@@ -16,9 +16,9 @@
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet"> 
         <style type = "text/css">
-/*            body {
-                background-image: url("jsp/heroes.jpg");
-            }*/
+            /*            body {
+                            background-image: url("jsp/heroes.jpg");
+                        }*/
             #map {
                 width: 600px;
                 height: 600px;
@@ -73,7 +73,7 @@
                                             <c:out value="${hero.name}"/><br><br>
                                         </c:forEach>
                                     </td>
-                                    
+
                                     <td>
                                         <input type="number" hidden value="${sighting.location.latitude}"
                                                id="sighting-${theCount.count}-latitude"/>

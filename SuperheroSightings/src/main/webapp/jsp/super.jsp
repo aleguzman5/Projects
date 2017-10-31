@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <h3>Super Hero/Villains</h3>
-                    <table id="superTable" class="table table-hover">
+                    <table id="superTable" class="table table-hover" style="table-layout: fixed; width: 100%">
                         <tr>
                             <th width="20%">Super Name</th>
                             <th width="20%">Description</th>
@@ -43,7 +43,7 @@
                         </tr>
                         <c:forEach var="superList" items="${superList}">
                             <tr>
-                                <td>
+                                <td style="word-wrap: break-word">
                                     <c:out value="${superList.name}"/>
                                 </td>
                                 <td>

@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class OrganizationController {
-    
+
     OrganizationDao organizationDao;
-    
+
     @Inject
     public OrganizationController(OrganizationDao organizationDao) {
         this.organizationDao = organizationDao;
@@ -38,12 +38,19 @@ public class OrganizationController {
         org.setDescription(request.getParameter("organizationDescription"));
         org.setAddress(request.getParameter("organizationAddress"));
         org.setCity(request.getParameter("organizationCity"));
-        org.setZip(Integer.parseInt(request.getParameter("organizationZip")));
-        org.setPhone(Long.parseLong(request.getParameter("organizationPhone")));
+        try {
+            org.setZip(Integer.parseInt(request.getParameter("organizationZip")));
+        } catch (Exception e) {
+            org.setZip(121212);
+        }
+        try {
+            org.setPhone(Long.parseLong(request.getParameter("organizationPhone")));
+        } catch (Exception e) {
+            org.setPhone(111111111);
+        }
         org.setEmail(request.getParameter("organizationEmail"));
-        
-        organizationDao.addOrganization(org);
 
+        organizationDao.addOrganization(org);
         return "redirect:organization";
     }
 
@@ -69,11 +76,11 @@ public class OrganizationController {
         organizationDao.deleteOrganization(organizationId);
         return "redirect:organization";
     }
-    
+
     @RequestMapping(value = "/displayOrganizationDetails", method = RequestMethod.GET)
     public String displayLoctaionDetails(HttpServletRequest request, Model model) {
         int organizationId = Integer.parseInt(request.getParameter("organizationId"));
-        
+
         Organization org = organizationDao.getOrganizationById(organizationId);
 
         model.addAttribute("organization", org);

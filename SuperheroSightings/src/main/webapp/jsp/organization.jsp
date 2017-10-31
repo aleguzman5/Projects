@@ -82,7 +82,7 @@
                         <div class="form-group">
                             <label for="organizationName" class="col-md-4 control-label">Organization Name:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="organizationName" placeholder="Organization Name"/>
+                                <input type="text" class="form-control" name="organizationName" placeholder="Organization Name" required/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -106,19 +106,19 @@
                         <div class="form-group">
                             <label for="organizationZip" class="col-md-4 control-label">Zip:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="organizationZip" placeholder="Zip"/>
+                                <input type="number" class="form-control" name="organizationZip" placeholder="Zip"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="organizationPhone" class="col-md-4 control-label">Phone:</label>
                             <div class="col-md-8">
-                                <input type="email" class="form-control" name="organizationPhone" placeholder="Phone"/>
+                                <input type="number" class="form-control" name="organizationPhone" placeholder="Phone"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="organizationEmail" class="col-md-4 control-label">Email:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="organizationEmail" placeholder="Email"/>
+                                <input type="email" class="form-control" name="organizationEmail" placeholder="Email"/>
                             </div>
                         </div>
                         <div class="form-group">
