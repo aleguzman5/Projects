@@ -8,7 +8,7 @@
         <title>Company Contacts</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-        
+
     </head>
     <body>
         <div class="container">
@@ -21,6 +21,11 @@
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displaySearchPage">Search</a></li>
                 </ul>    
             </div>
+            <c:if test="${pageContext.request.userPrincipal.name != null}">
+                <p>Hello : ${pageContext.request.userPrincipal.name}
+                    | <a href="<c:url value="/j_spring_security_logout" />" > Logout</a>
+                </p>
+            </c:if>
             <!--Main Page content start-->
             <ul class="list-group" id="errorMessages"></ul>
             <div class="row">

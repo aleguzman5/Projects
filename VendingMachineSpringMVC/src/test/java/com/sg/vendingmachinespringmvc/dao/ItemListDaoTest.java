@@ -56,7 +56,7 @@ public class ItemListDaoTest {
      */
     @Test
     public void testGetAllItems() {
-        
+
         assertEquals(9, dao.getAllItems().size());
     }
 
@@ -74,7 +74,6 @@ public class ItemListDaoTest {
      */
     @Test
     public void testUpdateInventory() {
-        
         dao.updateInventory(1);
         assertEquals(8, dao.getItem(1).getQuantity());
     }

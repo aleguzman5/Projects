@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <h3>Organizations</h3>
-                    <table id="organizationTable" class="table table-hover">
+                    <table id="organizationTable" class="table table-hover" >
                         <tr>
                             <th width="25%">Organization Name</th>
                             <th width="15%">City</th>

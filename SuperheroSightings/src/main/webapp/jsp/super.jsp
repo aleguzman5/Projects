@@ -46,7 +46,7 @@
                                 <td style="word-wrap: break-word">
                                     <c:out value="${superList.name}"/>
                                 </td>
-                                <td>
+                                <td style="word-wrap: break-word">
                                     <c:out value="${superList.description}"/>
                                 </td>
                                 <td>

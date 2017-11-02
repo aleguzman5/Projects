@@ -45,23 +45,23 @@ public class ContactListDaoDbImpl implements ContactListDao {
             = "select * from contacts where company = ?";
 
     private JdbcTemplate jdbcTemplate;
-    
+
     public void setjdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public Contact addContact(Contact contact) {
         jdbcTemplate.update(SQL_INSERT_CONTACT,
-        contact.getFirstName(),
-        contact.getLastName(),
-        contact.getCompany(),
-        contact.getPhone(),
-        contact.getEmail());
-        
+                contact.getFirstName(),
+                contact.getLastName(),
+                contact.getCompany(),
+                contact.getPhone(),
+                contact.getEmail());
+
         int newId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
-        
+
         contact.setContactId(newId);
         return contact;
     }
@@ -98,39 +98,45 @@ public class ContactListDaoDbImpl implements ContactListDao {
 
     @Override
     public List<Contact> searchContacts(Map<SearchTerm, String> criteria) {
-        if(criteria.isEmpty()) {
+        if (criteria.isEmpty()) {
             return getAllContacts();
         } else {
-            
+            // build a prepared statement based on the user's search
+            // terms
             StringBuilder sQuery = new StringBuilder("select * from contacts where ");
-            
+            // build the where clause
             int numParams = criteria.size();
             int paramPosition = 0;
-            
-            String [] paramVals = new String[numParams];
+            // we'll put the positional parameters into an array, the 
+            // order of the parameters will match the order in which we 
+            // get the search criteria from the map
+            String[] paramVals = new String[numParams];
             Set<SearchTerm> keySet = criteria.keySet();
             Iterator<SearchTerm> iter = keySet.iterator();
-            
+            // build up the where clause based on the key/value pairs in 
+            // the map build where clause and positional parameter array
             while (iter.hasNext()) {
                 SearchTerm currentKey = iter.next();
-                
+                // if we are not the first one in, we must add an AND to 
+                // the where clause
                 if (paramPosition > 0) {
                     sQuery.append(" and ");
                 }
-                
+                // now append our criteria name
                 sQuery.append(currentKey);
                 sQuery.append(" = ? ");
-                
+                // grab the value for this search criteria and put it into 
+                // the paramVals array
                 paramVals[paramPosition] = criteria.get(currentKey);
                 paramPosition++;
             }
-            
+
             return jdbcTemplate.query(sQuery.toString(), new ContactMapper(), paramVals);
         }
     }
 
     private static final class ContactMapper implements RowMapper<Contact> {
-        
+
         public Contact mapRow(ResultSet rs, int rowNum) throws SQLException {
             Contact contact = new Contact();
             contact.setContactId(rs.getLong("contact_id"));
@@ -141,6 +147,6 @@ public class ContactListDaoDbImpl implements ContactListDao {
             contact.setEmail(rs.getString("email"));
             return contact;
         }
-        
+
     }
 }

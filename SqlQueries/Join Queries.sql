@@ -51,7 +51,6 @@ from employeeterritories;
 select *
 from territories;
 
-
 USE swccorp;
 
 select 

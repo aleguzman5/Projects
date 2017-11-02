@@ -21,5 +21,4 @@ insert into items (`name`, price, quantity) values
     ('Doritos', 1.75, 11),
     ('Almond Joy', 1.85, 1),
     ('Trident', 1.95, 6);
-    
-    select* from items;
+

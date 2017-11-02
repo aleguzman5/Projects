@@ -21,6 +21,11 @@
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displaySearchPage">Search</a></li>
                 </ul>    
             </div>
+            <c:if test="${pageContext.request.userPrincipal.name != null}">
+                <p>Hello : ${pageContext.request.userPrincipal.name}
+                    | <a href="<c:url value="/j_spring_security_logout" />" > Logout</a>
+                </p>
+            </c:if>
             <sf:form class="form-horizontal" role="form" modelAttribute="contact" action="editContact" method="POST">
                 <div class="form-group">
                     <label for="add-first-name" class="col-md-4 control-label">First Name</label>
